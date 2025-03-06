@@ -9,3 +9,14 @@ const timeout = function (second: number): Promise<never> {
     }, second * 1000);
   });
 };
+
+export const getJSON = async function (url: string): Promise<any> {
+  try {
+    const res = await Promise.race([fetch(url), timeout(7)]);
+    const data = await res.json();
+    if (!res.ok) throw new Error("someThing went wrong");
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
