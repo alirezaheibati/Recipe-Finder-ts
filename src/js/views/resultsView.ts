@@ -1,4 +1,4 @@
-import { Recipe } from "../../interfaces/recipe";
+import { Recipe } from "../../interfaces/Recipe";
 import View from "./View";
 class ResultsView extends View {
   constructor() {
@@ -50,4 +50,4 @@ class ResultsView extends View {
   }
 }
 
-export default new ResultsView();
+export default ResultsView;
