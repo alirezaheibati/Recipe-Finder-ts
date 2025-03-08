@@ -48,4 +48,15 @@ export default class RecipeModel {
       throw err;
     }
   }
+
+  async loadSearchRecipes(query: string) {
+    try {
+      const data = await getJSON(
+        `${API_URL}complexSearch?query=${query}&number=10&addRecipeInformation=true&apiKey=${API_KEY}`
+      );
+      this.searchResults = data.results;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
