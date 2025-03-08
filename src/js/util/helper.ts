@@ -14,7 +14,8 @@ export const getJSON = async function (url: string): Promise<any> {
   try {
     const res = await Promise.race([fetch(url), timeout(7)]);
     const data = await res.json();
-    if (!res.ok) throw new Error("someThing went wrong");
+    if (!res.ok)
+      throw new Error("Failed to fetch recipe. Please try again later.");
     return data;
   } catch (err) {
     throw err;
