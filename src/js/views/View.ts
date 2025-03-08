@@ -25,4 +25,19 @@ export default abstract class View {
     this._parentElement.innerHTML = "";
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
+
+  renderError(message: string) {
+    const markup = `
+          <div
+          class="h-full w-full flex justify-center font-mono items-center"
+          >
+            <p>
+              <i class="fa-solid fa-face-meh text-red-500"></i>
+                ${message}
+            </p>
+          </div> 
+    `;
+    this._parentElement.innerHTML = "";
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
+  }
 }
