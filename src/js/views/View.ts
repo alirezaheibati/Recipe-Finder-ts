@@ -13,4 +13,16 @@ export default abstract class View {
     this._parentElement.innerHTML = "";
     this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
+
+  renderSpinner() {
+    const markup = `
+        <div
+            class="spinner h-full w-full flex justify-center items-center -translate-x-6"
+          >
+            <i class="fa-solid fa-spinner text-8xl animate-spin"></i>
+        </div>
+        `;
+    this._parentElement.innerHTML = "";
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
+  }
 }
