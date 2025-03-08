@@ -31,9 +31,7 @@ export default class RecipeController {
 
       this.resultsView.render(this.recipeModel.searchResults);
     } catch (err) {
-      console.log(err);
-
-      console.log("some thing went wrong");
+      this.resultsView.renderError(err);
     }
   };
 
@@ -46,7 +44,7 @@ export default class RecipeController {
       await this.recipeModel.loadRecipe(id);
       this.recipeView.render(this.recipeModel.recipe);
     } catch (err) {
-      console.log(err);
+      this.recipeView.renderError(err);
     }
   }
 }
