@@ -100,6 +100,9 @@ class RecipeView extends View {
           </div>
     `;
   }
+  hashChangeHandler(handler: () => Promise<void>) {
+    window.addEventListener("hashchange", handler);
+  }
 }
 
 export default RecipeView;
