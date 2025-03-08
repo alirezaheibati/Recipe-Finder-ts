@@ -10,4 +10,10 @@ export default class SearchView {
     ) as HTMLInputElement;
     return inputElement.value;
   }
+  recipeSearchFormHandler(handler: () => void) {
+    this._parentElement.addEventListener("submit", (e: SubmitEvent) => {
+      e.preventDefault();
+      handler();
+    });
+  }
 }
