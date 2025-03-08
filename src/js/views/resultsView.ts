@@ -1,4 +1,4 @@
-import { Recipe } from "../../interfaces/Recipe";
+import RecipeAPIResponse from "../../interfaces/RecipeAPIResponse";
 import View from "./View";
 class ResultsView extends View {
   constructor() {
@@ -7,7 +7,7 @@ class ResultsView extends View {
 
   _generateMarkup() {
     return this._data
-      .map((recipe: Recipe) => {
+      .map((recipe: RecipeAPIResponse) => {
         return `
         <a href="#${recipe.id}" class="block w-full">
                         <div
@@ -34,11 +34,7 @@ class ResultsView extends View {
                   </div>
                   <div>
                     <p class="text-slate-400">Cooking time:</p>
-                    ${
-                      recipe.readyInMinutes
-                        ? recipe.readyInMinutes
-                        : recipe.cookingTime
-                    }min
+                    ${recipe.cookingMinutes ?? recipe.readyInMinutes}min
                   </div>
                 </div>
               </div>
