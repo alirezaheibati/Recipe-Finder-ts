@@ -30,6 +30,7 @@ export default class RecipeController {
     this.bookmarkView.bookmarkedRecipesBtnClickHandler(
       this._renderBookmarksController.bind(this)
     );
+    this.recipeView.updateServingHandler(this._servingsController.bind(this));
   }
 
   _getRandomRecipeController = async function () {
@@ -80,6 +81,11 @@ export default class RecipeController {
     } catch (err) {
       this.resultsView.renderError(err);
     }
+  }
+
+  _servingsController(newServings: number) {
+    this.recipeModel.updateServings(newServings);
+    this.recipeView.render(this.recipeModel.recipe);
   }
 
   _renderBookmarksController() {
