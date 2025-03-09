@@ -38,6 +38,7 @@ export default class RecipeController {
 
   _getRandomRecipeController = async function () {
     try {
+      this.resultsView.renderSpinner();
       await this.recipeModel.getRandomRecipes();
       if (this.recipeModel.searchResults.length === 0) {
         throw new Error(
@@ -56,7 +57,7 @@ export default class RecipeController {
       // Get the recipe ID from the URL hash
       const id = window.location.hash.slice(1);
       if (!id) return;
-
+      this.recipeView.renderSpinner();
       await this.recipeModel.loadRecipe(id);
       this.recipeView.render(this.recipeModel.recipe);
     } catch (err) {
