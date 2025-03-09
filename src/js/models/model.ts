@@ -83,4 +83,12 @@ export default class RecipeModel {
     const storage = localStorage.getItem("bookmarks");
     if (storage) this.bookmarks = JSON.parse(storage);
   }
+
+  updateServings(newServings: number) {
+    this.recipe.ingredients.forEach((ingredient) => {
+      ingredient.amount =
+        (ingredient.amount * newServings) / this.recipe.servings;
+    });
+    this.recipe.servings = newServings;
+  }
 }
