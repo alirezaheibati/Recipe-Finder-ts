@@ -64,4 +64,18 @@ export default class RecipeModel {
   _storageBookmark() {
     localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
   }
+
+  addBookmark() {
+    this.recipe.bookmark = true;
+    this.bookmarks.push(this.recipe);
+    this._storageBookmark();
+  }
+
+  removeBookmark() {
+    this.bookmarks = this.bookmarks.filter(
+      (bookmark) => bookmark.id !== this.recipe.id
+    );
+    this.recipe.bookmark = false;
+    this._storageBookmark();
+  }
 }
