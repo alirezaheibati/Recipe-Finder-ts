@@ -78,4 +78,9 @@ export default class RecipeModel {
     this.recipe.bookmark = false;
     this._storageBookmark();
   }
+
+  loadBookmarks() {
+    const storage = localStorage.getItem("bookmarks");
+    if (storage) this.bookmarks = JSON.parse(storage);
+  }
 }
