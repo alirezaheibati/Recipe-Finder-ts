@@ -21,6 +21,7 @@ export default class RecipeController {
 
     this.setupEventHandlers();
     this._getRandomRecipeController();
+    this.recipeModel.loadBookmarks();
   }
 
   setupEventHandlers(): void {
