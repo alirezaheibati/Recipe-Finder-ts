@@ -2,18 +2,21 @@ import RecipeModel from "../models/model";
 import ResultsView from "../views/resultsView";
 import RecipeView from "../views/recipeView";
 import SearchView from "../views/searchView";
+import BookmarkView from "../views/bookmarkView";
 
 export default class RecipeController {
   recipeModel: RecipeModel;
   resultsView: ResultsView;
   recipeView: RecipeView;
   searchView: SearchView;
+  bookmarkView: BookmarkView;
 
   constructor() {
     this.recipeModel = new RecipeModel();
     this.resultsView = new ResultsView();
     this.recipeView = new RecipeView();
     this.searchView = new SearchView();
+    this.bookmarkView = new BookmarkView();
 
     this.setupEventHandlers();
     this._getRandomRecipeController();
@@ -23,6 +26,9 @@ export default class RecipeController {
     this.recipeView.hashChangeHandler(this._recipeController.bind(this));
     this.searchView.recipeSearchFormHandler(
       this._searchRecipeController.bind(this)
+    );
+    this.bookmarkView.bookmarkedRecipesBtnClickHandler(
+      this._renderBookmarksController.bind(this)
     );
   }
 
@@ -73,6 +79,27 @@ export default class RecipeController {
       this.recipeView.render(this.recipeModel.recipe);
     } catch (err) {
       this.resultsView.renderError(err);
+    }
+  }
+
+  _renderBookmarksController() {
+    // Toggle the bookmark active state
+    this.recipeModel.bookmarkIsActive = !this.recipeModel.bookmarkIsActive;
+    // Display an error message if there are no bookmarks and the bookmark view is active
+    if (
+      this.recipeModel.bookmarks.length < 1 &&
+      this.recipeModel.bookmarkIsActive
+    ) {
+      this.resultsView.renderError(
+        "There is no bookmarked recipes. Please find your favorite recipe and bookmark it :)"
+      );
+      return;
+    }
+    // Render bookmarks if active, otherwise render search results
+    if (this.recipeModel.bookmarkIsActive) {
+      this.resultsView.render(this.recipeModel.bookmarks);
+    } else {
+      this.resultsView.render(this.recipeModel.searchResults);
     }
   }
 }
