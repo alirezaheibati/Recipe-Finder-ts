@@ -5,10 +5,12 @@ export default class RecipeModel {
   public searchResults: Recipe[];
   public bookmarks: Recipe[];
   public recipe: Recipe;
+  public bookmarkIsActive: boolean;
 
   constructor() {
     this.searchResults = [];
     this.bookmarks = [];
+    this.bookmarkIsActive = false;
   }
   getRandomRecipes = async function (): Promise<void> {
     try {
@@ -58,5 +60,8 @@ export default class RecipeModel {
     } catch (err) {
       throw err;
     }
+  }
+  _storageBookmark() {
+    localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
   }
 }
