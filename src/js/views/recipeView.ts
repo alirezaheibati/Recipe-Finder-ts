@@ -74,7 +74,7 @@ class RecipeView extends View {
               class="text-slate-500 mb-8 flex justify-between items-center flex-wrap [&_li]:w-full md:[&_li]:w-1/2 [&_li]:mb-2 [&_li]:text-slate-100"
             >${this._data.ingredients
               .map((ing: { amount: number; unit: string; name: string }) => {
-                return `<li><i class="fa-solid fa-circle-check text-orange-500"></i> ${ing.amount.toFixed(
+                return `<li class="w-full md:w-1/2"><i class="fa-solid fa-circle-check text-orange-500"></i> ${ing.amount.toFixed(
                   2
                 )} ${ing.unit} of ${ing.name}</li>`;
               })
