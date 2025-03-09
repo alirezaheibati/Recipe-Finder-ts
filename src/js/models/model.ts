@@ -1,17 +1,29 @@
 import { getJSON } from "../util/helper";
 import { API_KEY, API_URL } from "../util/config";
 import { Recipe } from "../../interfaces/Recipe";
+
+/**
+ * Model class to manage recipe data and interactions with the API.
+ */
 export default class RecipeModel {
   public searchResults: Recipe[];
   public bookmarks: Recipe[];
   public recipe: Recipe;
   public bookmarkIsActive: boolean;
 
+  /**
+   * Initializes the RecipeModel with default values.
+   */
   constructor() {
     this.searchResults = [];
     this.bookmarks = [];
     this.bookmarkIsActive = false;
   }
+
+  /**
+   * Fetches random recipes from the API and updates the search results.
+   * @returns {Promise<void>}
+   */
   getRandomRecipes = async function (): Promise<void> {
     try {
       const data = await getJSON(`${API_URL}random?number=5&apiKey=${API_KEY}`);
@@ -21,6 +33,11 @@ export default class RecipeModel {
     }
   };
 
+  /**
+   * Loads a specific recipe by its ID from the API.
+   * @param {string} id - The ID of the recipe to load.
+   * @returns {Promise<void>}
+   */
   async loadRecipe(id: string) {
     try {
       const data = await getJSON(
@@ -51,6 +68,11 @@ export default class RecipeModel {
     }
   }
 
+  /**
+   * Loads recipes based on a search query from the API.
+   * @param {string} query - The search query to use.
+   * @returns {Promise<void>}
+   */
   async loadSearchRecipes(query: string) {
     try {
       const data = await getJSON(
@@ -61,16 +83,27 @@ export default class RecipeModel {
       throw err;
     }
   }
+
+  /**
+   * Stores the current list of bookmarks in local storage.
+   * @private
+   */
   _storageBookmark() {
     localStorage.setItem("bookmarks", JSON.stringify(this.bookmarks));
   }
 
+  /**
+   * Adds the current recipe to the list of bookmarks and updates local storage.
+   */
   addBookmark() {
     this.recipe.bookmark = true;
     this.bookmarks.push(this.recipe);
     this._storageBookmark();
   }
 
+  /**
+   * Removes the current recipe from the list of bookmarks and updates local storage.
+   */
   removeBookmark() {
     this.bookmarks = this.bookmarks.filter(
       (bookmark) => bookmark.id !== this.recipe.id
@@ -79,11 +112,18 @@ export default class RecipeModel {
     this._storageBookmark();
   }
 
+  /**
+   * Loads bookmarks from local storage.
+   */
   loadBookmarks() {
     const storage = localStorage.getItem("bookmarks");
     if (storage) this.bookmarks = JSON.parse(storage);
   }
 
+  /**
+   * Updates the ingredient amounts based on the new number of servings.
+   * @param {number} newServings - The new number of servings.
+   */
   updateServings(newServings: number) {
     this.recipe.ingredients.forEach((ingredient) => {
       ingredient.amount =

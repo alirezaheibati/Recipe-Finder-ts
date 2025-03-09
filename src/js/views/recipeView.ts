@@ -1,10 +1,22 @@
 import View from "./View";
 
+/**
+ * Class representing the view for displaying a single recipe.
+ */
 class RecipeView extends View {
+  /**
+   * Creates an instance of RecipeView and initializes the parent element.
+   */
   constructor() {
     super(document.getElementById("recipe-container"));
   }
-  _generateMarkup() {
+
+  /**
+   * Generates the markup for the recipe details.
+   * @returns {string} The generated markup as a string.
+   * @protected
+   */
+  _generateMarkup(): string {
     return `
               <div
             class="recepi-content lg:h-full relative text-slate-100 font-mono lg:overflow-y-auto custom-scrollbar"
@@ -100,10 +112,19 @@ class RecipeView extends View {
           </div>
     `;
   }
+
+  /**
+   * Attaches a handler to the window hash change event.
+   * @param {() => Promise<void>} handler - The handler function to call on hash change.
+   */
   hashChangeHandler(handler: () => Promise<void>) {
     window.addEventListener("hashchange", handler);
   }
 
+  /**
+   * Attaches a handler to the serving size update buttons.
+   * @param {(newServings: number) => void} handler - The handler function to call on serving size update.
+   */
   updateServingHandler(handler: (newServings: number) => void) {
     this._parentElement.addEventListener("click", (e) => {
       const btn = (e.target as Element).closest(".serving-btn");
@@ -113,6 +134,10 @@ class RecipeView extends View {
     });
   }
 
+  /**
+   * Attaches a handler to the bookmark button click event.
+   * @param {(id: number) => void} handler - The handler function to call on bookmark action.
+   */
   bookmarkRecipeHandler(handler: (id: number) => void) {
     this._parentElement.addEventListener("click", (e) => {
       const btn = (e.target as Element).closest(".btn-bookmark");

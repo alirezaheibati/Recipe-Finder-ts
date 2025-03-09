@@ -5,6 +5,9 @@ import SearchView from "../views/searchView";
 import BookmarkView from "../views/bookmarkView";
 import { Recipe } from "../../interfaces/Recipe";
 
+/**
+ * Controller class to manage recipe-related interactions.
+ */
 export default class RecipeController {
   recipeModel: RecipeModel;
   resultsView: ResultsView;
@@ -12,6 +15,9 @@ export default class RecipeController {
   searchView: SearchView;
   bookmarkView: BookmarkView;
 
+  /**
+   * Initializes the RecipeController with instances of models and views.
+   */
   constructor() {
     this.recipeModel = new RecipeModel();
     this.resultsView = new ResultsView();
@@ -24,6 +30,9 @@ export default class RecipeController {
     this.recipeModel.loadBookmarks();
   }
 
+  /**
+   * Sets up event handlers for various views.
+   */
   setupEventHandlers(): void {
     this.recipeView.hashChangeHandler(this._recipeController.bind(this));
     this.searchView.recipeSearchFormHandler(
@@ -36,6 +45,10 @@ export default class RecipeController {
     this.recipeView.bookmarkRecipeHandler(this._bookmarkController.bind(this));
   }
 
+  /**
+   * Controller to get random recipes and render them.
+   * @private
+   */
   _getRandomRecipeController = async function () {
     try {
       this.resultsView.renderSpinner();
@@ -52,6 +65,10 @@ export default class RecipeController {
     }
   };
 
+  /**
+   * Controller to handle the recipe details based on the URL hash.
+   * @private
+   */
   async _recipeController() {
     try {
       // Get the recipe ID from the URL hash
@@ -64,6 +81,11 @@ export default class RecipeController {
       this.recipeView.renderError(err);
     }
   }
+
+  /**
+   * Controller to handle the search functionality and render results.
+   * @private
+   */
   async _searchRecipeController() {
     try {
       this.resultsView.renderSpinner();
@@ -87,6 +109,11 @@ export default class RecipeController {
     }
   }
 
+  /**
+   * Controller to handle the bookmark functionality.
+   * @param {number} id - The ID of the recipe to be bookmarked or unbookmarked.
+   * @private
+   */
   _bookmarkController(id: number) {
     const recipeIsbookmarked = this.recipeModel.bookmarks.some(
       (bookmark: Recipe) => bookmark.id === id
@@ -95,8 +122,8 @@ export default class RecipeController {
     else this.recipeModel.addBookmark();
 
     this.recipeView.render(this.recipeModel.recipe);
-    //if user bookmarked/unbookmark a recipe while bookmarked recipes are rendering,
-    //render new bookmarked list.
+    // If user bookmarked/unbookmarked a recipe while bookmarked recipes are rendering,
+    // render new bookmarked list.
     if (this.recipeModel.bookmarkIsActive) {
       if (this.recipeModel.bookmarks.length < 1) {
         this.resultsView.renderError(
@@ -106,11 +133,20 @@ export default class RecipeController {
     }
   }
 
+  /**
+   * Controller to handle the serving size updates.
+   * @param {number} newServings - The new number of servings.
+   * @private
+   */
   _servingsController(newServings: number) {
     this.recipeModel.updateServings(newServings);
     this.recipeView.render(this.recipeModel.recipe);
   }
 
+  /**
+   * Controller to render bookmarks or search results based on the bookmark state.
+   * @private
+   */
   _renderBookmarksController() {
     // Toggle the bookmark active state
     this.recipeModel.bookmarkIsActive = !this.recipeModel.bookmarkIsActive;

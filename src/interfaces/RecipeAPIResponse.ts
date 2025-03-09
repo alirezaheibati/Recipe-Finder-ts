@@ -1,6 +1,6 @@
 // RecipeAPIResponse.ts
 import Ingredients from "./Ingredients";
-
+// Represents a response from the recipe API containing detailed information about a recipe.
 export default interface RecipeAPIResponse {
   id: number;
   image: string;

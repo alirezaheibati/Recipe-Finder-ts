@@ -1,4 +1,5 @@
 import Ingredient from "./Ingredients";
+// Represents a recipe with detailed information.
 export interface Recipe {
   id: number;
   title: string;

@@ -1,11 +1,23 @@
 import RecipeAPIResponse from "../../interfaces/RecipeAPIResponse";
 import View from "./View";
+
+/**
+ * Class representing the view for displaying search results.
+ */
 class ResultsView extends View {
+  /**
+   * Creates an instance of ResultsView and initializes the parent element.
+   */
   constructor() {
     super(document.getElementById("aisle-container"));
   }
 
-  _generateMarkup() {
+  /**
+   * Generates the markup for the search results.
+   * @returns {string} The generated markup as a string.
+   * @protected
+   */
+  _generateMarkup(): string {
     return this._data
       .map((recipe: RecipeAPIResponse) => {
         return `
