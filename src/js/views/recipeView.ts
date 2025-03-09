@@ -103,6 +103,15 @@ class RecipeView extends View {
   hashChangeHandler(handler: () => Promise<void>) {
     window.addEventListener("hashchange", handler);
   }
+
+  updateServingHandler(handler: (newServings: number) => void) {
+    this._parentElement.addEventListener("click", (e) => {
+      const btn = (e.target as Element).closest(".serving-btn");
+      if (!btn) return;
+      const newServings = +(btn as HTMLElement).dataset.updateTo;
+      if (newServings > 1) handler(newServings);
+    });
+  }
 }
 
 export default RecipeView;
