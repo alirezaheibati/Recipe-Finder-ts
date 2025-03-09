@@ -3,6 +3,7 @@ import ResultsView from "../views/resultsView";
 import RecipeView from "../views/recipeView";
 import SearchView from "../views/searchView";
 import BookmarkView from "../views/bookmarkView";
+import { Recipe } from "../../interfaces/Recipe";
 
 export default class RecipeController {
   recipeModel: RecipeModel;
@@ -31,6 +32,7 @@ export default class RecipeController {
       this._renderBookmarksController.bind(this)
     );
     this.recipeView.updateServingHandler(this._servingsController.bind(this));
+    this.recipeView.bookmarkRecipeHandler(this._bookmarkController.bind(this));
   }
 
   _getRandomRecipeController = async function () {
@@ -80,6 +82,25 @@ export default class RecipeController {
       this.recipeView.render(this.recipeModel.recipe);
     } catch (err) {
       this.resultsView.renderError(err);
+    }
+  }
+
+  _bookmarkController(id: number) {
+    const recipeIsbookmarked = this.recipeModel.bookmarks.some(
+      (bookmark: Recipe) => bookmark.id === id
+    );
+    if (recipeIsbookmarked) this.recipeModel.removeBookmark();
+    else this.recipeModel.addBookmark();
+
+    this.recipeView.render(this.recipeModel.recipe);
+    //if user bookmarked/unbookmark a recipe while bookmarked recipes are rendering,
+    //render new bookmarked list.
+    if (this.recipeModel.bookmarkIsActive) {
+      if (this.recipeModel.bookmarks.length < 1) {
+        this.resultsView.renderError(
+          "There is no bookmarked recipes. Please find your favorite recipe and bookmark it :)"
+        );
+      } else this.resultsView.render(this.recipeModel.bookmarks);
     }
   }
 
