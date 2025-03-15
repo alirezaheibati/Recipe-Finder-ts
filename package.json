@@ -1,7 +1,7 @@
 {
-  "name": "typescript-tailwind-webpack-starter",
+  "name": "recipe-explorer",
   "version": "1.0.0",
-  "description": "A modern Webpack 5, Tailwind CSS 3, and TypeScript Web Apps Starter Template",
+  "description": "A modern Webpack 5, Tailwind CSS 3, and TypeScript Web Apps so search recipes and bookmark favorite ones",
   "private": true,
   "scripts": {
     "start": "webpack serve --mode=development --open",
@@ -11,8 +11,8 @@
     "test:watch": "jest --watch"
   },
   "keywords": [],
-  "author": "Muhammad Ahsan Ayaz<ahsan.ubitian@gmail.com>",
-  "license": "MIT",
+  "author": "Alireza Heibati",
+  "license": "",
   "devDependencies": {
     "@types/jest": "^29.5.4",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
